@@ -9,12 +9,13 @@ const API_BASE = 'https://api-brandao.zapcontabil.chat';
 const API_KEY  = 'e05609578b1dc72b3360f2154be225844f01c856129200d8418ecbcc7125c23d43b14c1674c7d30bbc5aee376c9ccb148857731f74cefd9fc1086877e5feea085de940e24f25b7426a62df5ab7a8df19a7ef5213b9b1286771820fdbaeffca80c0160e607715fe4ef840fb79c1b44a996097ecb22f3ed72ba8ff39d425';
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
+// Proxy para o Zappy
 app.use('/zappy', async (req, res) => {
   const path = req.url.replace(/^\/?/, '/api/');
   const targetUrl = API_BASE + path;
-  console.log('Proxying:', req.method, targetUrl);
+  console.log('Zappy:', req.method, targetUrl);
   try {
     const response = await fetch(targetUrl, {
       method: req.method,
@@ -25,18 +26,36 @@ app.use('/zappy', async (req, res) => {
       body: req.method !== 'GET' ? JSON.stringify(req.body) : undefined,
     });
     const text = await response.text();
-    try {
-      res.status(response.status).json(JSON.parse(text));
-    } catch {
-      res.status(response.status).send(text);
-    }
+    try { res.status(response.status).json(JSON.parse(text)); }
+    catch { res.status(response.status).send(text); }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Proxy para a API da Anthropic (IA)
+app.post('/anthropic', async (req, res) => {
+  console.log('Anthropic: chamando IA...');
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': req.headers['x-api-key'] || '',
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify(req.body),
+    });
+    const text = await response.text();
+    try { res.status(response.status).json(JSON.parse(text)); }
+    catch { res.status(response.status).send(text); }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 app.get('/', (req, res) => {
-  res.json({ status: true, message: 'Proxy Zappy Contábil v3 rodando!' });
+  res.json({ status: true, message: 'Proxy Zappy Contábil v4 rodando!' });
 });
 
 app.listen(PORT, () => {
