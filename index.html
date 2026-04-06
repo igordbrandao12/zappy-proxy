@@ -22,418 +22,79 @@
     --red: #9b2a2a;
     --red-bg: #fdeaea;
     --blue: #1a4a8a;
-    --blue-bg: #e8f0fc;
     --accent: #2d5a3d;
     --accent-light: #e8f2eb;
     --radius: 10px;
     --radius-lg: 16px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .topbar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .topbar-logo .icon {
-    width: 32px;
-    height: 32px;
-    background: var(--accent);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .topbar-logo .icon svg { width: 18px; height: 18px; fill: white; }
-
-  .topbar-logo span {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-
-  .topbar-logo small {
-    font-size: 11px;
-    color: var(--text3);
-    display: block;
-    font-weight: 400;
-    letter-spacing: 0;
-    margin-top: -2px;
-  }
-
-  .status-pill {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--text2);
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    border-radius: 20px;
-  }
-
-  .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: #ccc;
-    transition: background 0.3s;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .topbar-logo { display: flex; align-items: center; gap: 10px; }
+  .topbar-logo .icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .topbar-logo span { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+  .topbar-logo small { font-size: 11px; color: var(--text3); display: block; font-weight: 400; margin-top: -2px; }
+  .status-pill { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); background: var(--surface2); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #ccc; transition: background 0.3s; }
   .dot.ok { background: #2ecc71; }
   .dot.err { background: #e74c3c; }
   .dot.loading { background: #f39c12; animation: pulse 1s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
   .main { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem; }
-
   .page { display: none; }
   .page.active { display: block; }
-
-  /* ---- FILTROS ---- */
-  .filters-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .filters-title {
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--text3);
-    margin-bottom: 0.75rem;
-  }
-
-  .filters-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .filters-row select,
-  .filters-row input[type="date"] {
-    flex: 1;
-    min-width: 160px;
-    height: 38px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    color: var(--text);
-    background: var(--surface2);
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-  }
-
-  .filters-row select:focus,
-  .filters-row input:focus {
-    border-color: var(--accent);
-  }
-
-  .btn-buscar {
-    height: 38px;
-    padding: 0 20px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: opacity 0.15s;
-  }
+  .filters-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+  .filters-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.75rem; }
+  .filters-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .filters-row select, .filters-row input[type="date"] { flex: 1; min-width: 160px; height: 38px; border: 1px solid var(--border); border-radius: var(--radius); padding: 0 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); background: var(--surface2); outline: none; appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .filters-row select:focus, .filters-row input:focus { border-color: var(--accent); }
+  .btn-buscar { height: 38px; padding: 0 20px; background: var(--accent); color: white; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
   .btn-buscar:hover { opacity: 0.88; }
   .btn-buscar:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* ---- LISTA ---- */
-  .tickets-header {
-    font-size: 12px;
-    color: var(--text3);
-    margin-bottom: 0.6rem;
-    padding-left: 4px;
-  }
-
+  .tickets-header { font-size: 12px; color: var(--text3); margin-bottom: 0.6rem; padding-left: 4px; }
   .tickets-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
-
-  .ticket-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.85rem 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s;
-    user-select: none;
-  }
-
-  .ticket-card:hover {
-    border-color: var(--border2);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-
-  .ticket-card.selected {
-    border-color: var(--accent);
-    background: var(--accent-light);
-  }
-
-  .avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: var(--accent-light);
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
+  .ticket-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1.1rem; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; user-select: none; }
+  .ticket-card:hover { border-color: var(--border2); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .ticket-card.selected { border-color: var(--accent); background: var(--accent-light); }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .ticket-info { flex: 1; min-width: 0; }
-
-  .ticket-name {
-    font-size: 14px;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .ticket-sub {
-    font-size: 12px;
-    color: var(--text2);
-    margin-top: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
+  .ticket-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ticket-sub { font-size: 12px; color: var(--text2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ticket-meta { text-align: right; flex-shrink: 0; }
-
-  .badge {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-weight: 500;
-    display: inline-block;
-  }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; display: inline-block; }
   .badge-open { background: var(--green-bg); color: var(--green); }
   .badge-closed { background: var(--border); color: var(--text2); }
   .badge-pending { background: var(--amber-bg); color: var(--amber); }
-
   .ticket-date { font-size: 11px; color: var(--text3); margin-top: 4px; }
-
-  .btn-avaliar {
-    width: 100%;
-    height: 44px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.15s;
-    letter-spacing: -0.01em;
-  }
+  .btn-avaliar { width: 100%; height: 44px; background: var(--accent); color: white; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; letter-spacing: -0.01em; }
   .btn-avaliar:hover { opacity: 0.88; }
   .btn-avaliar:disabled { opacity: 0.35; cursor: not-allowed; }
-
-  .empty-state {
-    text-align: center;
-    padding: 3rem 2rem;
-    color: var(--text3);
-    font-size: 14px;
-  }
-
-  /* ---- LOADING ---- */
-  .loading-page {
-    text-align: center;
-    padding: 4rem 2rem;
-  }
-
-  .spinner-big {
-    width: 44px; height: 44px;
-    border: 3px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 1.25rem;
-  }
+  .empty-state { text-align: center; padding: 3rem 2rem; color: var(--text3); font-size: 14px; }
+  .loading-page { text-align: center; padding: 4rem 2rem; }
+  .spinner-big { width: 44px; height: 44px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1.25rem; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   .loading-page p { font-size: 15px; color: var(--text2); }
   .loading-page small { font-size: 13px; color: var(--text3); margin-top: 6px; display: block; }
-
-  /* ---- RESULTADO ---- */
-  .result-back {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--text2);
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    width: fit-content;
-  }
+  .result-back { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); cursor: pointer; margin-bottom: 1.5rem; width: fit-content; }
   .result-back:hover { color: var(--text); }
   .result-back svg { width: 16px; height: 16px; }
-
-  .result-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .nota-circle {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    border: 3px solid currentColor;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .nota-circle .nota-num {
-    font-size: 26px;
-    font-weight: 600;
-    font-family: 'DM Mono', monospace;
-  }
-
+  .result-header { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .nota-circle { width: 72px; height: 72px; border-radius: 50%; border: 3px solid currentColor; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .nota-circle .nota-num { font-size: 26px; font-weight: 600; font-family: 'DM Mono', monospace; }
   .result-info h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.02em; }
   .result-info p { font-size: 13px; color: var(--text2); }
-
-  .scores-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    margin-bottom: 1rem;
-  }
-
-  .score-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.85rem 1rem;
-  }
-
+  .scores-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 1rem; }
+  .score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; }
   .score-label { font-size: 11px; color: var(--text3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
-
-  .score-val {
-    font-size: 24px;
-    font-weight: 600;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .c-green { color: var(--green); }
-  .c-amber { color: var(--amber); }
-  .c-red { color: var(--red); }
-
-  .feedback-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.1rem 1.3rem;
-    margin-bottom: 8px;
-  }
-
-  .feedback-label {
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--text3);
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .feedback-label .tag {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
+  .score-val { font-size: 24px; font-weight: 600; font-family: 'DM Mono', monospace; }
+  .c-green { color: var(--green); } .c-amber { color: var(--amber); } .c-red { color: var(--red); }
+  .feedback-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 8px; }
+  .feedback-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px; }
+  .feedback-label .tag { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
   .feedback-text { font-size: 14px; color: var(--text); line-height: 1.65; }
-
-  .conv-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.85rem 1rem;
-    font-size: 12.5px;
-    font-family: 'DM Mono', monospace;
-    color: var(--text2);
-    line-height: 1.6;
-    max-height: 140px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-    margin-bottom: 1rem;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--text3);
-    margin-bottom: 0.6rem;
-    padding-left: 2px;
-  }
-
-  .error-box {
-    background: var(--red-bg);
-    border: 1px solid #f5c6c6;
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    font-size: 13px;
-    color: var(--red);
-    margin-bottom: 1rem;
-    display: none;
-  }
+  .conv-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; font-size: 12.5px; font-family: 'DM Mono', monospace; color: var(--text2); line-height: 1.6; max-height: 140px; overflow-y: auto; white-space: pre-wrap; margin-bottom: 1rem; }
+  .section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.6rem; padding-left: 2px; }
+  .error-box { background: var(--red-bg); border: 1px solid #f5c6c6; border-radius: var(--radius); padding: 1rem 1.25rem; font-size: 13px; color: var(--red); margin-bottom: 1rem; display: none; }
 </style>
 </head>
 <body>
@@ -441,7 +102,9 @@
 <div class="topbar">
   <div class="topbar-logo">
     <div class="icon">
-      <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+        <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+      </svg>
     </div>
     <div>
       <span>Avaliador de Atendimento</span>
@@ -456,15 +119,11 @@
 
 <div class="main">
 
-  <!-- TELA: LISTA -->
   <div class="page active" id="pageLista">
-
     <div class="filters-card">
       <div class="filters-title">Filtros</div>
       <div class="filters-row">
-        <select id="filtroAtendente">
-          <option value="">Todos os atendentes</option>
-        </select>
+        <select id="filtroAtendente"><option value="">Todos os atendentes</option></select>
         <select id="filtroStatus">
           <option value="">Todos os status</option>
           <option value="open">Abertos</option>
@@ -475,20 +134,12 @@
         <button class="btn-buscar" id="btnBuscar" onclick="buscarTickets()">Buscar</button>
       </div>
     </div>
-
     <div class="error-box" id="errorBox"></div>
-
     <div class="tickets-header" id="ticketsHeader"></div>
-    <div class="tickets-list" id="listaTickets">
-      <div class="empty-state">Carregando atendimentos...</div>
-    </div>
-
-    <button class="btn-avaliar" id="btnAvaliarSel" onclick="avaliarSelecionado()" disabled>
-      Selecione um atendimento para avaliar
-    </button>
+    <div class="tickets-list" id="listaTickets"><div class="empty-state">Carregando atendimentos...</div></div>
+    <button class="btn-avaliar" id="btnAvaliarSel" onclick="avaliarSelecionado()" disabled>Selecione um atendimento para avaliar</button>
   </div>
 
-  <!-- TELA: LOADING -->
   <div class="page" id="pageLoading">
     <div class="loading-page">
       <div class="spinner-big"></div>
@@ -497,20 +148,15 @@
     </div>
   </div>
 
-  <!-- TELA: RESULTADO -->
   <div class="page" id="pageResultado">
     <div class="result-back" onclick="voltarLista()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
       Voltar para atendimentos
     </div>
-
     <div class="section-label">Prévia da conversa</div>
     <div class="conv-box" id="convBox"></div>
-
     <div class="result-header" id="resultHeader"></div>
-
     <div class="scores-grid" id="scoresGrid"></div>
-
     <div class="feedback-section" id="feedFortes"></div>
     <div class="feedback-section" id="feedMelhorar"></div>
     <div class="feedback-section" id="feedRecomendacoes"></div>
@@ -519,15 +165,7 @@
 </div>
 
 <script>
-const API_BASE = 'https://api-brandao.zapcontabil.chat';
-const API_KEY  = 'e05609578b1dc72b3360f2154be225844f01c856129200d8418ecbcc7125c23d43b14c1674c7d30bbc5aee376c9ccb148857731f74cefd9fc1086877e5feea085de940e24f25b7426a62df5ab7a8df19a7ef5213b9b1286771820fdbaeffca80c0160e607715fe4ef840fb79c1b44a996097ecb22f3ed72ba8ff39d425';
-
-const HEADERS = {
-  'apikey': API_KEY,
-  'Authorization': `Bearer ${API_KEY}`,
-  'Content-Type': 'application/json'
-};
-
+const PROXY = 'https://zappy-proxy.onrender.com/zappy';
 let ticketSelecionado = null;
 let todosTickets = [];
 
@@ -535,79 +173,43 @@ function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
 function setStatus(state, msg) {
-  const dot = document.getElementById('statusDot');
-  dot.className = 'dot ' + state;
+  document.getElementById('statusDot').className = 'dot ' + state;
   document.getElementById('statusText').textContent = msg;
 }
-
-function showError(msg) {
-  const box = document.getElementById('errorBox');
-  box.textContent = msg;
-  box.style.display = 'block';
+function showError(msg) { const b = document.getElementById('errorBox'); b.textContent = msg; b.style.display = 'block'; }
+function hideError() { document.getElementById('errorBox').style.display = 'none'; }
+function iniciais(nome) { if (!nome) return '?'; return nome.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase(); }
+function formatData(str) { if (!str) return ''; try { return new Date(str).toLocaleDateString('pt-BR'); } catch { return ''; } }
+function getBadge(s) {
+  const m = {open:'badge-open',closed:'badge-closed',pending:'badge-pending'};
+  const l = {open:'Aberto',closed:'Fechado',pending:'Pendente'};
+  return `<span class="badge ${m[s]||'badge-closed'}">${l[s]||s}</span>`;
 }
-
-function hideError() {
-  document.getElementById('errorBox').style.display = 'none';
-}
-
-function iniciais(nome) {
-  if (!nome) return '?';
-  return nome.split(' ').slice(0,2).map(n=>n[0]).join('').toUpperCase();
-}
-
-function formatData(str) {
-  if (!str) return '';
-  try { return new Date(str).toLocaleDateString('pt-BR'); } catch { return ''; }
-}
-
-function getBadge(status) {
-  const map = { open:'badge-open', closed:'badge-closed', pending:'badge-pending' };
-  const labels = { open:'Aberto', closed:'Fechado', pending:'Pendente' };
-  const cls = map[status] || 'badge-closed';
-  return `<span class="badge ${cls}">${labels[status] || status}</span>`;
-}
-
-function corNota(n) {
-  return n >= 7.5 ? 'c-green' : n >= 5 ? 'c-amber' : 'c-red';
-}
+function corNota(n) { return n >= 7.5 ? 'c-green' : n >= 5 ? 'c-amber' : 'c-red'; }
 
 async function init() {
-  setStatus('loading', 'Conectando...');
-  hideError();
+  setStatus('loading', 'Conectando...'); hideError();
   try {
     const [rT, rU] = await Promise.all([
-      fetch(`${API_BASE}/api/tickets?limit=30`, { headers: HEADERS }),
-      fetch(`${API_BASE}/api/users`, { headers: HEADERS })
+      fetch(`${PROXY}/tickets?limit=30`),
+      fetch(`${PROXY}/users`)
     ]);
-
-    if (!rT.ok) {
-      const err = await rT.text();
-      throw new Error(`Status ${rT.status}: ${err.slice(0,120)}`);
-    }
-
+    if (!rT.ok) throw new Error(`Status ${rT.status}`);
     const dT = await rT.json();
     todosTickets = Array.isArray(dT) ? dT : (dT.data || dT.tickets || dT.records || []);
-
     if (rU.ok) {
       const dU = await rU.json();
       const users = Array.isArray(dU) ? dU : (dU.data || dU.users || []);
       const sel = document.getElementById('filtroAtendente');
-      users.forEach(u => {
-        const o = document.createElement('option');
-        o.value = u.id || u._id || '';
-        o.textContent = u.name || u.nome || u.email || 'Atendente';
-        sel.appendChild(o);
-      });
+      users.forEach(u => { const o = document.createElement('option'); o.value = u.id||u._id||''; o.textContent = u.name||u.nome||u.email||'Atendente'; sel.appendChild(o); });
     }
-
     renderTickets(todosTickets);
     setStatus('ok', `${todosTickets.length} atendimentos carregados`);
   } catch(e) {
     setStatus('err', 'Erro na API');
-    showError(`Não foi possível carregar os atendimentos. Detalhes: ${e.message}`);
-    document.getElementById('listaTickets').innerHTML = '<div class="empty-state">Verifique sua conexão e recarregue a página.</div>';
+    showError(`Não foi possível carregar. Detalhe: ${e.message}`);
+    document.getElementById('listaTickets').innerHTML = '<div class="empty-state">Recarregue a página ou verifique o proxy.</div>';
   }
 }
 
@@ -616,58 +218,39 @@ async function buscarTickets() {
   const atendente = document.getElementById('filtroAtendente').value;
   const status    = document.getElementById('filtroStatus').value;
   const data      = document.getElementById('filtroData').value;
-
-  let url = `${API_BASE}/api/tickets?limit=50`;
+  let url = `${PROXY}/tickets?limit=50`;
   if (atendente) url += `&userId=${atendente}`;
   if (status)    url += `&status=${status}`;
   if (data)      url += `&date=${data}`;
-
   document.getElementById('btnBuscar').disabled = true;
   document.getElementById('listaTickets').innerHTML = '<div class="empty-state">Buscando...</div>';
   setStatus('loading', 'Buscando...');
-
   try {
-    const r = await fetch(url, { headers: HEADERS });
+    const r = await fetch(url);
     if (!r.ok) throw new Error(`Status ${r.status}`);
     const d = await r.json();
     todosTickets = Array.isArray(d) ? d : (d.data || d.tickets || d.records || []);
     renderTickets(todosTickets);
     setStatus('ok', `${todosTickets.length} atendimentos encontrados`);
-  } catch(e) {
-    setStatus('err', 'Erro na busca');
-    showError(`Erro ao buscar: ${e.message}`);
-  }
+  } catch(e) { setStatus('err', 'Erro na busca'); showError(`Erro: ${e.message}`); }
   document.getElementById('btnBuscar').disabled = false;
 }
 
 function renderTickets(tickets) {
   const lista = document.getElementById('listaTickets');
-  document.getElementById('ticketsHeader').textContent =
-    tickets.length ? `${tickets.length} atendimento${tickets.length>1?'s':''} encontrado${tickets.length>1?'s':''}` : '';
-
-  if (!tickets.length) {
-    lista.innerHTML = '<div class="empty-state">Nenhum atendimento encontrado com esses filtros.</div>';
-    return;
-  }
-
+  document.getElementById('ticketsHeader').textContent = tickets.length ? `${tickets.length} atendimento${tickets.length>1?'s':''} encontrado${tickets.length>1?'s':''}` : '';
+  if (!tickets.length) { lista.innerHTML = '<div class="empty-state">Nenhum atendimento encontrado.</div>'; return; }
   lista.innerHTML = tickets.slice(0,25).map(t => {
-    const id   = t.id || t._id || '';
-    const nome = t.contact?.name || t.contactName || t.customer?.name || 'Cliente';
-    const ate  = t.user?.name || t.userName || t.assignee?.name || 'Não atribuído';
-    const status = (t.status || 'open').toLowerCase();
-    const data = formatData(t.createdAt || t.updatedAt);
-    return `
-      <div class="ticket-card" id="card-${id}" onclick="selecionarTicket('${id}', this)">
-        <div class="avatar">${iniciais(nome)}</div>
-        <div class="ticket-info">
-          <div class="ticket-name">${nome}</div>
-          <div class="ticket-sub">Atendente: ${ate}</div>
-        </div>
-        <div class="ticket-meta">
-          ${getBadge(status)}
-          <div class="ticket-date">${data}</div>
-        </div>
-      </div>`;
+    const id = t.id||t._id||'';
+    const nome = t.contact?.name||t.contactName||t.customer?.name||'Cliente';
+    const ate = t.user?.name||t.userName||t.assignee?.name||'Não atribuído';
+    const status = (t.status||'open').toLowerCase();
+    const data = formatData(t.createdAt||t.updatedAt);
+    return `<div class="ticket-card" id="card-${id}" onclick="selecionarTicket('${id}', this)">
+      <div class="avatar">${iniciais(nome)}</div>
+      <div class="ticket-info"><div class="ticket-name">${nome}</div><div class="ticket-sub">Atendente: ${ate}</div></div>
+      <div class="ticket-meta">${getBadge(status)}<div class="ticket-date">${data}</div></div>
+    </div>`;
   }).join('');
 }
 
@@ -677,162 +260,70 @@ function selecionarTicket(id, el) {
   ticketSelecionado = todosTickets.find(t => String(t.id||t._id) === String(id));
   const btn = document.getElementById('btnAvaliarSel');
   btn.disabled = false;
-  const nome = ticketSelecionado?.contact?.name || ticketSelecionado?.contactName || 'cliente';
-  btn.textContent = `Avaliar atendimento com ${nome} →`;
+  btn.textContent = `Avaliar atendimento com ${ticketSelecionado?.contact?.name||ticketSelecionado?.contactName||'cliente'} →`;
 }
 
 async function avaliarSelecionado() {
   if (!ticketSelecionado) return;
-  const id          = ticketSelecionado.id || ticketSelecionado._id;
-  const nomeAte     = ticketSelecionado.user?.name || ticketSelecionado.userName || ticketSelecionado.assignee?.name || 'Atendente';
-  const nomeCliente = ticketSelecionado.contact?.name || ticketSelecionado.contactName || 'Cliente';
-
+  const id = ticketSelecionado.id||ticketSelecionado._id;
+  const nomeAte = ticketSelecionado.user?.name||ticketSelecionado.userName||ticketSelecionado.assignee?.name||'Atendente';
+  const nomeCliente = ticketSelecionado.contact?.name||ticketSelecionado.contactName||'Cliente';
   showPage('pageLoading');
-
   let conversa = '';
   try {
-    // Tenta buscar mensagens por ticketId
-    const endpoints = [
-      `${API_BASE}/api/messages?ticketId=${id}&limit=100`,
-      `${API_BASE}/api/messages?ticket=${id}&limit=100`,
-      `${API_BASE}/api/tickets/${id}/messages`,
-    ];
-
-    for (const ep of endpoints) {
+    for (const ep of [`${PROXY}/messages?ticketId=${id}&limit=100`,`${PROXY}/messages?ticket=${id}&limit=100`,`${PROXY}/tickets/${id}/messages`]) {
       try {
-        const r = await fetch(ep, { headers: HEADERS });
+        const r = await fetch(ep);
         if (r.ok) {
           const d = await r.json();
-          const msgs = Array.isArray(d) ? d : (d.data || d.messages || d.records || []);
+          const msgs = Array.isArray(d) ? d : (d.data||d.messages||d.records||[]);
           if (msgs.length) {
-            conversa = msgs.map(m => {
-              const quem  = m.fromMe ? nomeAte : nomeCliente;
-              const texto = m.body || m.text || m.content || m.message || '';
-              return texto.trim() ? `${quem}: ${texto.trim()}` : '';
-            }).filter(Boolean).join('\n');
+            conversa = msgs.map(m => { const q = m.fromMe?nomeAte:nomeCliente; const t = m.body||m.text||m.content||m.message||''; return t.trim()?`${q}: ${t.trim()}`:''; }).filter(Boolean).join('\n');
             if (conversa.trim()) break;
           }
         }
       } catch {}
     }
-
-    // Fallback: tenta pegar msgs dentro do próprio ticket
     if (!conversa.trim()) {
-      const r = await fetch(`${API_BASE}/api/tickets/${id}`, { headers: HEADERS });
-      if (r.ok) {
-        const d = await r.json();
-        const msgs = d.messages || d.msgs || [];
-        conversa = msgs.map(m => {
-          const quem  = m.fromMe ? nomeAte : nomeCliente;
-          const texto = m.body || m.text || m.content || '';
-          return texto.trim() ? `${quem}: ${texto.trim()}` : '';
-        }).filter(Boolean).join('\n');
-      }
+      const r = await fetch(`${PROXY}/tickets/${id}`);
+      if (r.ok) { const d = await r.json(); const msgs = d.messages||d.msgs||[]; conversa = msgs.map(m => { const q = m.fromMe?nomeAte:nomeCliente; const t = m.body||m.text||m.content||''; return t.trim()?`${q}: ${t.trim()}`:''; }).filter(Boolean).join('\n'); }
     }
-  } catch(e) {
-    conversa = '';
-  }
-
-  if (!conversa.trim()) {
-    conversa = `[Conversa não disponível via API — ticket #${id}, cliente: ${nomeCliente}, atendente: ${nomeAte}]`;
-  }
-
+  } catch {}
+  if (!conversa.trim()) conversa = `[Conversa não disponível — ticket #${id}, cliente: ${nomeCliente}, atendente: ${nomeAte}]`;
   await avaliarComIA(conversa, nomeAte, nomeCliente);
 }
 
 async function avaliarComIA(conversa, nomeAte, nomeCliente) {
-  const prompt = `Você é especialista em qualidade de atendimento em escritórios contábeis brasileiros.
-Avalie a conversa de WhatsApp do atendente "${nomeAte}" com o cliente "${nomeCliente}".
-
-Avalie de 0 a 10 cada critério:
-1. Cordialidade e educação
-2. Clareza nas respostas
-3. Conhecimento técnico contábil
-4. Ortografia e gramática
-5. Resolução efetiva do problema
-6. Tempo/agilidade percebida
-
-Responda SOMENTE com JSON válido, sem markdown, sem texto adicional:
-{"nota_geral":7.5,"classificacao":"Bom","criterios":{"cordialidade":8,"clareza":7,"conhecimento_tecnico":9,"ortografia":6,"resolucao":7,"agilidade":8},"pontos_fortes":"...","pontos_melhorar":"...","recomendacoes":"..."}
-
-CONVERSA:
-${conversa}`;
-
+  const prompt = `Você é especialista em qualidade de atendimento em escritórios contábeis brasileiros. Avalie a conversa de WhatsApp do atendente "${nomeAte}" com o cliente "${nomeCliente}". Avalie de 0 a 10: cordialidade e educação, clareza nas respostas, conhecimento técnico contábil, ortografia e gramática, resolução efetiva do problema, tempo/agilidade percebida. Responda SOMENTE com JSON válido sem markdown: {"nota_geral":7.5,"classificacao":"Bom","criterios":{"cordialidade":8,"clareza":7,"conhecimento_tecnico":9,"ortografia":6,"resolucao":7,"agilidade":8},"pontos_fortes":"...","pontos_melhorar":"...","recomendacoes":"..."}\n\nCONVERSA:\n${conversa}`;
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
     });
-
     const d = await r.json();
-    const txt = d.content.map(i => i.text||'').join('').replace(/```json|```/g,'').trim();
-    const result = JSON.parse(txt);
-    renderResultado(result, nomeAte, nomeCliente, conversa);
-  } catch(e) {
-    showPage('pageLista');
-    showError('Erro ao avaliar com IA. Tente novamente.');
-  }
+    const txt = d.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
+    renderResultado(JSON.parse(txt), nomeAte, nomeCliente, conversa);
+  } catch(e) { showPage('pageLista'); showError('Erro ao avaliar com IA. Tente novamente.'); }
 }
 
 function renderResultado(r, nomeAte, nomeCliente, conversa) {
   const nota = parseFloat(r.nota_geral).toFixed(1);
-  const cor  = corNota(parseFloat(nota));
-  const corHex = cor === 'c-green' ? 'var(--green)' : cor === 'c-amber' ? 'var(--amber)' : 'var(--red)';
-
-  document.getElementById('convBox').textContent = conversa.slice(0, 800) + (conversa.length > 800 ? '\n...' : '');
-
-  document.getElementById('resultHeader').innerHTML = `
-    <div class="nota-circle ${cor}" style="border-color:${corHex}; color:${corHex}">
-      <span class="nota-num">${nota}</span>
-    </div>
-    <div class="result-info">
-      <h3>${nomeAte}</h3>
-      <p>${r.classificacao} · Atendimento com ${nomeCliente}</p>
-    </div>`;
-
-  const labels = {
-    cordialidade: 'Cordialidade',
-    clareza: 'Clareza',
-    conhecimento_tecnico: 'Conhecimento técnico',
-    ortografia: 'Ortografia',
-    resolucao: 'Resolução do problema',
-    agilidade: 'Agilidade'
-  };
-
-  document.getElementById('scoresGrid').innerHTML = Object.entries(labels).map(([k,l]) => {
-    const v = r.criterios[k];
-    return `<div class="score-card">
-      <div class="score-label">${l}</div>
-      <div class="score-val ${corNota(v)}">${v}<span style="font-size:13px;color:var(--text3)">/10</span></div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('feedFortes').innerHTML = `
-    <div class="feedback-label"><span class="tag" style="background:var(--green)"></span>Pontos fortes</div>
-    <div class="feedback-text">${r.pontos_fortes}</div>`;
-
-  document.getElementById('feedMelhorar').innerHTML = `
-    <div class="feedback-label"><span class="tag" style="background:var(--amber)"></span>Pontos a melhorar</div>
-    <div class="feedback-text">${r.pontos_melhorar}</div>`;
-
-  document.getElementById('feedRecomendacoes').innerHTML = `
-    <div class="feedback-label"><span class="tag" style="background:var(--blue)"></span>Recomendações</div>
-    <div class="feedback-text">${r.recomendacoes}</div>`;
-
+  const cor = corNota(parseFloat(nota));
+  const corHex = cor==='c-green'?'var(--green)':cor==='c-amber'?'var(--amber)':'var(--red)';
+  document.getElementById('convBox').textContent = conversa.slice(0,800)+(conversa.length>800?'\n...':'');
+  document.getElementById('resultHeader').innerHTML = `<div class="nota-circle ${cor}" style="border-color:${corHex};color:${corHex}"><span class="nota-num">${nota}</span></div><div class="result-info"><h3>${nomeAte}</h3><p>${r.classificacao} · Atendimento com ${nomeCliente}</p></div>`;
+  const labels = {cordialidade:'Cordialidade',clareza:'Clareza',conhecimento_tecnico:'Conhecimento técnico',ortografia:'Ortografia',resolucao:'Resolução do problema',agilidade:'Agilidade'};
+  document.getElementById('scoresGrid').innerHTML = Object.entries(labels).map(([k,l]) => { const v=r.criterios[k]; return `<div class="score-card"><div class="score-label">${l}</div><div class="score-val ${corNota(v)}">${v}<span style="font-size:13px;color:var(--text3)">/10</span></div></div>`; }).join('');
+  document.getElementById('feedFortes').innerHTML = `<div class="feedback-label"><span class="tag" style="background:var(--green)"></span>Pontos fortes</div><div class="feedback-text">${r.pontos_fortes}</div>`;
+  document.getElementById('feedMelhorar').innerHTML = `<div class="feedback-label"><span class="tag" style="background:var(--amber)"></span>Pontos a melhorar</div><div class="feedback-text">${r.pontos_melhorar}</div>`;
+  document.getElementById('feedRecomendacoes').innerHTML = `<div class="feedback-label"><span class="tag" style="background:var(--blue)"></span>Recomendações</div><div class="feedback-text">${r.recomendacoes}</div>`;
   showPage('pageResultado');
 }
 
 function voltarLista() {
-  showPage('pageLista');
-  ticketSelecionado = null;
+  showPage('pageLista'); ticketSelecionado = null;
   const btn = document.getElementById('btnAvaliarSel');
-  btn.disabled = true;
-  btn.textContent = 'Selecione um atendimento para avaliar';
+  btn.disabled = true; btn.textContent = 'Selecione um atendimento para avaliar';
   document.querySelectorAll('.ticket-card').forEach(c => c.classList.remove('selected'));
 }
 
