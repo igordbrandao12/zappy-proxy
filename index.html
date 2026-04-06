@@ -33,7 +33,7 @@
   .filters-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
   .filters-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.75rem; }
   .filters-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .filters-row select, .filters-row input[type="date"] { flex: 1; min-width: 160px; height: 38px; border: 1px solid var(--border); border-radius: var(--radius); padding: 0 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); background: var(--surface2); outline: none; appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .filters-row select, .filters-row input[type="date"] { flex: 1; min-width: 150px; height: 38px; border: 1px solid var(--border); border-radius: var(--radius); padding: 0 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); background: var(--surface2); outline: none; appearance: none; -webkit-appearance: none; cursor: pointer; }
   .filters-row select:focus, .filters-row input:focus { border-color: var(--accent); }
   .btn-buscar { height: 38px; padding: 0 20px; background: var(--accent); color: white; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
   .btn-buscar:hover { opacity: 0.88; } .btn-buscar:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -171,12 +171,11 @@ function getBadge(s) {
 }
 function corNota(n) { return n >= 7.5 ? 'c-green' : n >= 5 ? 'c-amber' : 'c-red'; }
 
-// Filtra tickets por data no lado do cliente
 function filtrarPorData(tickets, inicio, fim) {
   if (!inicio && !fim) return tickets;
   return tickets.filter(t => {
     const d = new Date(t.createdAt || t.updatedAt);
-    if (inicio && d < new Date(inicio)) return false;
+    if (inicio && d < new Date(inicio + 'T00:00:00')) return false;
     if (fim && d > new Date(fim + 'T23:59:59')) return false;
     return true;
   });
@@ -184,20 +183,19 @@ function filtrarPorData(tickets, inicio, fim) {
 
 async function init() {
   setStatus('loading', 'Conectando...'); hideError();
-  // Define data padrão: últimos 7 dias
   const hoje = new Date();
-  const semanaPassada = new Date(hoje - 7 * 24 * 60 * 60 * 1000);
-  document.getElementById('filtroDataInicio').value = semanaPassada.toISOString().split('T')[0];
+  const trintaDias = new Date(hoje - 30 * 24 * 60 * 60 * 1000);
+  document.getElementById('filtroDataInicio').value = trintaDias.toISOString().split('T')[0];
   document.getElementById('filtroDataFim').value = hoje.toISOString().split('T')[0];
 
   try {
     const [rT, rU] = await Promise.all([
-      fetch(`${PROXY}/zappy/tickets?limit=100`),
+      fetch(`${PROXY}/tickets-recentes?pageSize=30`),
       fetch(`${PROXY}/zappy/users`)
     ]);
     if (!rT.ok) throw new Error(`Status ${rT.status}`);
     const dT = await rT.json();
-    todosTickets = Array.isArray(dT) ? dT : (dT.data || dT.tickets || dT.records || []);
+    todosTickets = dT.tickets || [];
 
     if (rU.ok) {
       const dU = await rU.json();
@@ -211,13 +209,11 @@ async function init() {
       });
     }
 
-    // Aplica filtro de data padrão
-    const filtrados = filtrarPorData(todosTickets,
-      document.getElementById('filtroDataInicio').value,
-      document.getElementById('filtroDataFim').value
-    );
-    renderTickets(filtrados);
-    setStatus('ok', `${filtrados.length} atendimentos carregados`);
+    const inicio = document.getElementById('filtroDataInicio').value;
+    const fim = document.getElementById('filtroDataFim').value;
+    const filtrados = filtrarPorData(todosTickets, inicio, fim);
+    renderTickets(filtrados.length ? filtrados : todosTickets);
+    setStatus('ok', `${todosTickets.length} atendimentos recentes carregados`);
   } catch(e) {
     setStatus('err', 'Erro na API');
     showError(`Não foi possível carregar. Detalhe: ${e.message}`);
@@ -232,9 +228,9 @@ async function buscarTickets() {
   const inicio    = document.getElementById('filtroDataInicio').value;
   const fim       = document.getElementById('filtroDataFim').value;
 
-  let url = `${PROXY}/zappy/tickets?limit=100`;
-  if (atendente) url += `&userId=${atendente}`;
+  let url = `${PROXY}/tickets-recentes?pageSize=30`;
   if (status)    url += `&status=${status}`;
+  if (atendente) url += `&userId=${atendente}`;
 
   document.getElementById('btnBuscar').disabled = true;
   document.getElementById('listaTickets').innerHTML = '<div class="empty-state">Buscando...</div>';
@@ -244,10 +240,10 @@ async function buscarTickets() {
     const r = await fetch(url);
     if (!r.ok) throw new Error(`Status ${r.status}`);
     const d = await r.json();
-    todosTickets = Array.isArray(d) ? d : (d.data || d.tickets || d.records || []);
+    todosTickets = d.tickets || [];
     const filtrados = filtrarPorData(todosTickets, inicio, fim);
-    renderTickets(filtrados);
-    setStatus('ok', `${filtrados.length} atendimentos encontrados`);
+    renderTickets(filtrados.length ? filtrados : todosTickets);
+    setStatus('ok', `${filtrados.length || todosTickets.length} atendimentos encontrados`);
   } catch(e) { setStatus('err', 'Erro'); showError(`Erro: ${e.message}`); }
   document.getElementById('btnBuscar').disabled = false;
 }
@@ -255,7 +251,7 @@ async function buscarTickets() {
 function renderTickets(tickets) {
   const lista = document.getElementById('listaTickets');
   document.getElementById('ticketsHeader').textContent = tickets.length ? `${tickets.length} atendimento${tickets.length>1?'s':''} encontrado${tickets.length>1?'s':''}` : '';
-  if (!tickets.length) { lista.innerHTML = '<div class="empty-state">Nenhum atendimento encontrado neste período.</div>'; return; }
+  if (!tickets.length) { lista.innerHTML = '<div class="empty-state">Nenhum atendimento encontrado.</div>'; return; }
   lista.innerHTML = tickets.slice(0,30).map(t => {
     const id = t.id || t._id || '';
     const nome = getNome(t);
